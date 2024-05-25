@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,21 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-import { forgot_page } from "@/lib/router";
-import { forgot_content, login_content } from "@/lib/content";
-import { SigninSchema } from "@/components/validation/schema";
+import { forgot_content } from "@/lib/content";
+import { ForgotPasswordSchema } from "@/components/validation/schema";
 
-export const SigninComponent = () => {
+export const ForgotPasswordComponent = () => {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof SigninSchema>>({
-    resolver: zodResolver(SigninSchema),
+  const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
+    resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: ""
     },
   })
 
-  const onSubmit = (data: z.infer<typeof SigninSchema>) => {
+  const onSubmit = (data: z.infer<typeof ForgotPasswordSchema>) => {
     toast({
       title: "You submitted the following values:",
       description: (
@@ -58,34 +55,8 @@ export const SigninComponent = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input 
-                  type="password" 
-                  placeholder="********" 
-                  {...field} 
-                  className="h-12 px-5" 
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="text-right text-sm mt-4">
-          <p>
-            <Link 
-              href={forgot_page} 
-              className="font-medium underline hover:text-blue-700">
-              {forgot_content.forgot_text}
-            </Link>
-          </p>
-        </div>
         <Button className="w-full h-12" type="submit">
-          {login_content.login}
+          {forgot_content.reset_link}
         </Button>
       </form>
     </Form>
