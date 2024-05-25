@@ -6,24 +6,22 @@ import { z } from "zod";
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-import { SignupSchema } from "@/components/validation/schema";
+import { SigninSchema } from "@/components/validation/schema";
 
-export const SignupComponent = () => {
+export const SigninComponent = () => {
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof SignupSchema>>({
-    resolver: zodResolver(SignupSchema),
+  const form = useForm<z.infer<typeof SigninSchema>>({
+    resolver: zodResolver(SigninSchema),
     defaultValues: {
-      username: "",
       email: "",
       password: "",
     },
   })
 
-  const onSubmit = (data: z.infer<typeof SignupSchema>) => {
+  const onSubmit = (data: z.infer<typeof SigninSchema>) => {
     toast({
       title: "You submitted the following values:",
       description: (
@@ -37,18 +35,6 @@ export const SignupComponent = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input placeholder="Intellifix" {...field} className="h-12 px-5" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="email"
@@ -73,17 +59,7 @@ export const SignupComponent = () => {
             </FormItem>
           )}
         />
-        <div className="items-top flex space-x-2">
-          <Checkbox id="terms" />
-          <div className="grid gap-2 leading-none">
-            <label htmlFor="terms" className="text-sm leading-5 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Yes, I understand and agree to the Intellifix&nbsp;
-              <a className="font-medium underline hover:text-blue-700" href="/">Terms of Service</a>, including the&nbsp;
-              <a className="font-medium underline hover:text-blue-700" href="/">User Agreement &amp; Privacy Policy</a>.
-            </label>
-          </div>
-        </div>
-        <Button className="w-full h-12" type="submit">Register</Button>
+        <Button className="w-full h-12" type="submit">Login</Button>
       </form>
     </Form>
   )
