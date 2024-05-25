@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,6 +11,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
+import { login_page } from "@/lib/router";
+import { register_content } from "@/lib/content";
 import { SignupSchema } from "@/components/validation/schema";
 
 export const SignupComponent = () => {
@@ -28,7 +31,9 @@ export const SignupComponent = () => {
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(data, null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -36,14 +41,20 @@ export const SignupComponent = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+      <form 
+        onSubmit={form.handleSubmit(onSubmit)} 
+        className="w-full space-y-6">
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Intellifix" {...field} className="h-12 px-5" />
+                <Input 
+                  placeholder="Intellifix" 
+                  {...field} 
+                  className="h-12 px-5" 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -55,7 +66,11 @@ export const SignupComponent = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="you@example.com" {...field} className="h-12 px-5" />
+                <Input 
+                  placeholder="example@example.com" 
+                  {...field} 
+                  className="h-12 px-5" 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +82,12 @@ export const SignupComponent = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} className="h-12 px-5" />
+                <Input 
+                  type="password" 
+                  placeholder="********" 
+                  {...field} 
+                  className="h-12 px-5" 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,14 +96,27 @@ export const SignupComponent = () => {
         <div className="items-top flex space-x-2">
           <Checkbox id="terms" />
           <div className="grid gap-2 leading-none">
-            <label htmlFor="terms" className="text-sm leading-5 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Yes, I understand and agree to the Intellifix&nbsp;
-              <a className="font-medium underline hover:text-blue-700" href="/">Terms of Service</a>, including the&nbsp;
-              <a className="font-medium underline hover:text-blue-700" href="/">User Agreement &amp; Privacy Policy</a>.
+            <label 
+              htmlFor="terms" 
+              className="text-sm leading-5 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              {register_content.understand_link}&nbsp;
+              <Link 
+                className="font-medium underline hover:text-blue-700" 
+                href={login_page}>
+                {register_content.service}
+              </Link>
+              {register_content.include}&nbsp;
+              <Link 
+                className="font-medium underline hover:text-blue-700" 
+                href={login_page}>
+                {register_content.agree}
+              </Link>.
             </label>
           </div>
         </div>
-        <Button className="w-full h-12" type="submit">Register</Button>
+        <Button className="w-full h-12" type="submit">
+          {register_content.register_text}
+        </Button>
       </form>
     </Form>
   )
