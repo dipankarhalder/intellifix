@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,12 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-import { forgot_page } from "@/lib/router";
+import { dashboard, forgot_page } from "@/lib/router";
 import { forgot_content, login_content } from "@/lib/content";
 import { SigninSchema } from "@/components/validation/schema";
 
 export const SigninComponent = () => {
+  const router = useRouter();
   const { toast } = useToast();
+
   const form = useForm<z.infer<typeof SigninSchema>>({
     resolver: zodResolver(SigninSchema),
     defaultValues: {
@@ -25,16 +28,15 @@ export const SigninComponent = () => {
   })
 
   const onSubmit = (data: z.infer<typeof SigninSchema>) => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(data, null, 2)}
-          </code>
-        </pre>
-      ),
-    });
+    if (data.email === "dipankar.spring@gmail.com" && data.password === "Dip@123456") {
+      router.push(dashboard)
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Opps! Something went wrong.",
+        description: "The email or password you entered is incorrect.",
+      })
+    }
   }
 
   return (
