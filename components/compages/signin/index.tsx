@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-import { forgot_page } from "@/lib/router";
+import { dashboard, forgot_page } from "@/lib/router";
 import { forgot_content, login_content } from "@/lib/content";
 import { SigninSchema } from "@/components/validation/schema";
 
@@ -29,7 +29,7 @@ export const SigninComponent = () => {
 
   const onSubmit = (data: z.infer<typeof SigninSchema>) => {
     if (data.email === "dipankar.spring@gmail.com" && data.password === "Dip@123456") {
-      router.push('/dashboard')
+      router.push(dashboard)
     } else {
       toast({
         variant: "destructive",
